@@ -1,0 +1,136 @@
+:root {
+    --block-height: 55px;
+    --block-width: 55px;
+    --key-height: 24px;
+    --key-width: 12px;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: black;
+    color: white;
+    margin: 0;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+
+}
+
+.alert, .invisible {
+    background-color: white;
+    color: black;
+    font-size: 14px;
+    text-align: center;
+    padding: 15px;
+    width: fit-content;
+    margin: auto;
+    border-radius: 8px;
+    transform: translate(0, 70px);
+    opacity: 1;
+}
+
+.invisible {
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+
+.game-header {
+    text-align: center;
+    flex-grow: 1;
+    width: 10px;
+}
+
+.back {
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    flex-grow: 1;
+    width: 10px;
+}
+
+.placeholder {
+    flex-grow: 1;
+    text-align: center;
+    width: 10px;
+}
+
+.back:hover {
+    color: rgb(198, 198, 198);
+}
+
+.grid {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 1 fr five times */
+    grid-template-rows: repeat(6, 1fr); /* fr = fraction */
+    width: calc(var(--block-width) * 6);
+    height: calc(var(--block-height) * 7);
+
+}
+
+.block, .almost, .correct, .wrong {
+    background-color: rgb(11, 11, 11);
+    text-align: center;
+    font-weight: bolder;
+    font-size: calc(var(--block-height) / 2);
+    height: var(--block-height);
+    width: var(--block-width);
+    line-height: var(--block-height); /* vertical align */
+    border: solid;
+    border-color: rgb(50, 50, 50);
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    margin: 25px;
+}
+
+.keys-row-one, .keys-row-two, .keys-row-three {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.key, .special-key, .k-correct, .k-almost, .k-wrong {
+    background-color: rgb(123, 122, 122);
+    padding: 10px;
+    height: var(--key-height);
+    width: var(--key-width);
+    text-align: center;
+    line-height: var(--key-height);
+    border-radius: 4px;
+    font-weight: bolder;
+    cursor: pointer;
+    font-size: var(--key-width);
+}
+
+.key:hover, .special-key:hover {
+    background-color: rgb(104, 104, 104);
+}
+
+.special-key {
+    width: 32px;
+}
+
+.almost, .k-almost {
+    background-color: rgb(166, 156, 17);
+    border-color: rgb(166, 156, 17);
+}
+
+.correct, .k-correct {
+    background-color: rgb(44, 120, 44);
+    border-color: rgb(44, 120, 44);
+}
+
+.wrong, .k-wrong {
+    background-color: rgb(50, 50, 50);
+    border-color: rgb(50, 50, 50);
+}
