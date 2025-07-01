@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
-import '../styles/globals.css';
 
 export default function Wordle() {
   const WORD = "FOAMY";
