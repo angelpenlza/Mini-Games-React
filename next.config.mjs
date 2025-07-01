@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: 'export',
-    images: { unoptimized: true },
-    basePath: 'Mini-Games-React',
-    assetPrefix: 'Mini-Games-React'
+    basePath: '/Mini-Games-React',
+    assetPrefix: '/Mini-Games-React/', 
+    images: {
+        unoptimized: true
+    }
 };
 
 export default nextConfig;
