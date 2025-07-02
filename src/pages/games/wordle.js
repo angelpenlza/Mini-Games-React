@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 
 export default function Wordle() {
   const [words,setWords] = useState(new Set());
-  const [wordPool, setWordPool] = useState(["ANGEL"]);
+  const [wordPool, setWordPool] = useState([]);
   const wordRef = useRef(words);
   
   useEffect(() => {
