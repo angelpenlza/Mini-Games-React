@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 
 export default function Wordle() {
   const [words,setWords] = useState(new Set());
-  const [wordPool, setWordPool] = useState([]);
+  const [wordPool, setWordPool] = useState(["INCUR"]);
   const wordRef = useRef(words);
   
   useEffect(() => {
@@ -21,10 +21,8 @@ export default function Wordle() {
       .then(text => {
         console.log(text);
         const wordPoolArray = text.split('\n').map(word => word.trim().toUpperCase());
-        setWordPool(prev => {
-          return wordPoolArray;
-        });
-        console.log(wordPool);
+        setWordPool(wordPoolArray);
+        console.log(wordPoolArray);
       })
   }, []);
 
