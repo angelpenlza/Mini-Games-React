@@ -5,7 +5,7 @@ export default function Wordle() {
   const [words,setWords] = useState(new Set());
   const [wordPool, setWordPool] = useState(["INCUR"]);
   const wordRef = useRef(words);
-  const poolRef = useRef(wordPool);
+  const [WORD, setWORD] = useState("INCUR");
   
   useEffect(() => {
     fetch('/Mini-Games-React/words.txt')
@@ -27,14 +27,13 @@ export default function Wordle() {
   }, []);
 
   useEffect(() => {
-    poolRef.current = wordPool;
-  }, [wordPool])
+    setWORD(Math.floor(Math.random() * wordPool.length));
+  }, [wordPool]);
 
   useEffect(() => {
     wordRef.current = new Set(words);
   }, [words]);
   
-  const WORD = poolRef.current[Math.floor(Math.random() * poolRef.current.length)];
   const blockClass = Array.from({ length: 30 }, () => "block");
   const keyClass = Array.from({ length: 26 }, () => "key");
   const [blockClasses, setBlockClasses] = useState(blockClass);
