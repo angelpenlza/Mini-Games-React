@@ -21,7 +21,9 @@ export default function Wordle() {
       .then(text => {
         console.log(text);
         const wordPoolArray = text.split('\n').map(word => word.trim().toUpperCase());
-        setWordPool(wordPoolArray);
+        setWordPool(prev => {
+          return wordPoolArray;
+        });
         console.log(wordPool);
       })
   }, []);
