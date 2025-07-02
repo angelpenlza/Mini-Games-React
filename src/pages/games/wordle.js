@@ -22,6 +22,7 @@ export default function Wordle() {
       .then(text => {
         console.log(text);
         const wordPoolArray = text.split('\n').map(word => word.trim().toUpperCase());
+        console.log(wordPoolArray);
         setWordPool(wordPoolArray);
       })
   }, []);
