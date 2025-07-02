@@ -2,6 +2,22 @@ import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Wordle() {
+  useEffect(() => {
+    fetch('/words.txt')
+      .then(res => res.text())
+      .then(text => {
+        console.log('reading words...');
+        const wordSet = new Set(
+          text.split('\n').map(word => word.trim().toUpperCase())
+        );
+        setWords(wordSet);
+      })
+  }, []);
+
+  useEffect(() => {
+    wordRef.current = new Set(words);
+  }, [words]);
+  
   const WORD = "FOAMY";
   const blockClass = Array.from({ length: 30 }, () => "block");
   const keyClass = Array.from({ length: 26 }, () => "key");
@@ -72,10 +88,10 @@ export default function Wordle() {
   const checkWord = () => {
     const userWord = userRef.current[rowRef.current];
     let word = WORD;
-    // if(!wordRef.current.has(userWord)) {
-    //   alertUser("Not in word list");
-    //   return;
-    // }
+    if(!wordRef.current.has(userWord)) {
+      alertUser("Not in word list");
+      return;
+    }
     if(userWord === WORD) {
       switch(rowRef.current) {
         case 0:
@@ -120,22 +136,6 @@ export default function Wordle() {
     if(rowRef.current < 5)
       setRow(prev => prev + 1);
   };
-
-  useEffect(() => {
-    wordRef.current = new Set(words);
-  }, [words]);
-
-  useEffect(() => {
-    fetch('/words.txt')
-      .then(res => res.text())
-      .then(text => {
-        console.log('reading words...');
-        const wordSet = new Set(
-          text.split('\n').map(word => word.trim().toUpperCase())
-        );
-        setWords(wordSet);
-      })
-  }, []);
 
   useEffect(() => {
     rowRef.current = row; 
