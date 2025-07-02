@@ -22,9 +22,12 @@ export default function Wordle() {
         console.log(text);
         const wordPoolArray = text.split('\n').map(word => word.trim().toUpperCase());
         setWordPool(wordPoolArray);
-        console.log(wordPoolArray);
       })
   }, []);
+
+  useEffect(() => {
+    console.log(wordPool);
+  }, [wordPool])
 
   useEffect(() => {
     wordRef.current = new Set(words);
