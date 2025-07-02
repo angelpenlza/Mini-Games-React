@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Wordle() {
+  const [words,setWords] = useState(new Set());
   useEffect(() => {
     fetch('/words.txt')
       .then(res => res.text())
@@ -25,7 +26,6 @@ export default function Wordle() {
   const [keyClasses, setKeyClasses] = useState(keyClass);
   const [userInput, setUserInput] = useState([ "", "", "", "", "", "" ]);
   const [row, setRow] = useState(0);
-  const [words,setWords] = useState(new Set());
   const [message, setMessage] = useState("empty");
   const [messageStatus, setMessageStatus] = useState("invisible");
   const [active, setActive] = useState(true);
