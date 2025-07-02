@@ -72,10 +72,10 @@ export default function Wordle() {
   const checkWord = () => {
     const userWord = userRef.current[rowRef.current];
     let word = WORD;
-    if(!wordRef.current.has(userWord)) {
-      alertUser("Not in word list");
-      return;
-    }
+    // if(!wordRef.current.has(userWord)) {
+    //   alertUser("Not in word list");
+    //   return;
+    // }
     if(userWord === WORD) {
       switch(rowRef.current) {
         case 0:
