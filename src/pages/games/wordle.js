@@ -10,7 +10,6 @@ export default function Wordle() {
     fetch('/Mini-Games-React/words.txt')
       .then(res => res.text())
       .then(text => {
-        console.log('reading words...');
         const wordSet = new Set(
           text.split('\n').map(word => word.trim().toUpperCase())
         );
@@ -129,7 +128,6 @@ export default function Wordle() {
     } 
 
     for(let i = 0; i < WORD.length; i++) { 
-      console.log(word);
       if(userWord[i] === word[i]){
         setColor("correct", i);
         word = word.replace(word[i], " ");
