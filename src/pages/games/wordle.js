@@ -3,8 +3,10 @@ import { useState, useRef, useEffect } from 'react';
 
 export default function Wordle() {
   const [words,setWords] = useState(new Set());
+  const wordRef = useRef(words);
+  
   useEffect(() => {
-    fetch('/words.txt')
+    fetch('/Mini-Games-React/words.txt')
       .then(res => res.text())
       .then(text => {
         console.log('reading words...');
@@ -32,7 +34,6 @@ export default function Wordle() {
 
   const rowRef = useRef(row); 
   const userRef = useRef(userInput);
-  const wordRef = useRef(words);
   
   const setColor = (color, pos) => {
     setBlockClasses(prev => {
