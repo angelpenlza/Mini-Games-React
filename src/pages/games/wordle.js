@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 
 export default function Wordle() {
   const [words,setWords] = useState(new Set());
+  const [wordPool, setWordPool] = useState([]);
   const wordRef = useRef(words);
   
   useEffect(() => {
@@ -15,13 +16,20 @@ export default function Wordle() {
         );
         setWords(wordSet);
       })
+
+    fetch('/Mini-Games-React/word_pool.txt')
+      .then(res => res.text())
+      .then(text => {
+        const wordPoolArray = text.split('\n').map(word => word.trim().toUpperCase())
+        setWordPool(wordPoolArray);
+      })
   }, []);
 
   useEffect(() => {
     wordRef.current = new Set(words);
   }, [words]);
   
-  const WORD = "FOAMY";
+  const WORD = wordPool[Math.floor(Math.random() * wordPool.length)];
   const blockClass = Array.from({ length: 30 }, () => "block");
   const keyClass = Array.from({ length: 26 }, () => "key");
   const [blockClasses, setBlockClasses] = useState(blockClass);
