@@ -23,8 +23,10 @@ export default function Wordle() {
         console.log(text);
         const wordPoolArray = text.split('\n').map(word => word.trim().toUpperCase());
         setWordPool(wordPoolArray);
-        const randomWord = wordPoolArray[Math.floor(Math.random() * wordPool.length)];
+        const randomWord = wordPoolArray[Math.floor(Math.random() * wordPoolArray.length)];
+        console.log(randomWord);
         setWORD(randomWord);
+        console.log(WORD);
       });
   }, []);
 
