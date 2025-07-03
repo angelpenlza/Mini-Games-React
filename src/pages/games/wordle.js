@@ -105,6 +105,14 @@ export default function Wordle() {
       alertUser("Not in word list");
       return;
     }
+
+    for(let i = 0; i < WORD.length; i++) {
+      if(userWord[i] === word[i]){
+        setColor("correct", i);
+        word = word.replace(word[i], " ");
+      }
+    }
+    
     if(userWord === WORD) {
       switch(rowRef.current) {
         case 0:
@@ -128,25 +136,26 @@ export default function Wordle() {
       }
       window.removeEventListener('keydown', getUserLetterFunc);
       setActive(false);
+      return;
     } 
 
     for(let i = 0; i < WORD.length; i++) { 
-      if(userWord[i] === word[i]){
-        setColor("correct", i);
-        word = word.replace(word[i], " ");
-      } else {
-        for(let j = 0; j < userWord.length; j++) {
-          if(userWord[i] === word[j]) {
-            setColor("almost", i);
-          word = word.replace(word[j], " ");
-            break;
-          }
+      for(let j = 0; j < userWord.length; j++) {
+        if(userWord[i] === word[j]) {
+          setColor("almost", i);
+        word = word.replace(word[j], " ");
+          break;
         }
-        setColor("wrong", i);
       }
+      setColor("wrong", i);
     }
     if(rowRef.current < 5)
       setRow(prev => prev + 1);
+
+    if(rowRef.current === 5) {
+      setMessage(WORD);
+      setMessageStatus("alert");
+    }
   };
 
   useEffect(() => {
@@ -207,7 +216,9 @@ export default function Wordle() {
             () => {getUserLetter("Enter")} :
             () => {}} className='special-key'>Enter</div>
           {keysRowThree}
-          <div onClick={() => {getUserLetter("Backspace")}} className='special-key'>Del</div>
+                  <div onClick={active ? 
+            () => {getUserLetter("Backspace")} :
+            () => {}} className='special-key'>Del</div>
         </div>
       </div>
     </>
