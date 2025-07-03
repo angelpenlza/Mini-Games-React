@@ -27,14 +27,14 @@ export default function Wordle() {
   }, []);
 
   useEffect(() => {
+    const randomWord = wordPool[Math.floor(Math.random() * wordPool.length)];
+    setMainWord("LEARS");
+  }, [wordPool]);
+
+  useEffect(() => {
     WORD.current = mainWord;
   }, [mainWord]);
 
-  useEffect(() => {
-    const randomWord = wordPool[Math.floor(Math.random() * wordPool.length)];
-    console.log(randomWord);
-    setMainWord(randomWord);
-  }, [wordPool]);
 
   useEffect(() => {
     wordRef.current = new Set(words);
@@ -111,16 +111,6 @@ export default function Wordle() {
       alertUser("Not in word list");
       return;
     }
-
-    for(let i = 0; i < WORD.current.length; i++) {
-      console.log('userWord[i]: ' + userWord[i]);
-      console.log('word[i]: ' + word[i]);
-      if(userWord[i] === word[i]){
-        setColor("correct", i);
-        word = word.replace(word[i], " ");
-        userWord = userWord.replace(userWord[i], " ");
-      }
-    }
     
     if(userWord === WORD.current) {
       switch(rowRef.current) {
@@ -145,16 +135,21 @@ export default function Wordle() {
       }
       window.removeEventListener('keydown', getUserLetterFunc);
       setActive(false);
-      return;
     } 
 
-    for(let i = 0; i < WORD.current.length; i++) { 
+    for(let i = 0; i < WORD.current.length; i++) {
+      if(userWord[i] == word[i]){
+        setColor("correct", i);
+        word = word.replace(word[i], " "); 
+        userWord = userWord.replace(userWord[i], " ");
+      }
+    }
+
+    for(let i = 0; i < word.length; i++) { 
       for(let j = 0; j < userWord.length; j++) {
-        console.log('userWord[i]: ' + userWord[i]);
-        console.log('word[j]: ' + word[j]);
-        if(userWord[i] === word[j]) {
+        if(userWord[i] === word[j] && userWord[i] !== " ") {
           setColor("almost", i);
-        word = word.replace(word[j], " ");
+          word = word.replace(word[j], " ");
           break;
         }
       }
