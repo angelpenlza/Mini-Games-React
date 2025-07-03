@@ -28,7 +28,7 @@ export default function Wordle() {
 
   useEffect(() => {
     const randomWord = wordPool[Math.floor(Math.random() * wordPool.length)];
-    setMainWord("LEARS");
+    setMainWord(randomWord);
   }, [wordPool]);
 
   useEffect(() => {
