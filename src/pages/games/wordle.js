@@ -3,9 +3,10 @@ import { useState, useRef, useEffect } from 'react';
 
 export default function Wordle() {
   const [words,setWords] = useState(new Set());
-  const [wordPool, setWordPool] = useState(["INCUR"]);
+  const [wordPool, setWordPool] = useState(["-----"]);
   const wordRef = useRef(words);
-  const [WORD, setWORD] = useState("INCUR");
+  const [mainWord, setMainWord] = useState("-----");
+  const WORD = useRef(mainWord);
   
   useEffect(() => {
     fetch('/Mini-Games-React/words.txt')
@@ -20,20 +21,19 @@ export default function Wordle() {
     fetch('/Mini-Games-React/word_pool.txt')
       .then(res => res.text())
       .then(text => {
-        console.log(text);
         const wordPoolArray = text.split('\n').map(word => word.trim().toUpperCase());
         setWordPool(wordPoolArray);
-        // const randomWord = wordPoolArray[Math.floor(Math.random() * wordPoolArray.length)];
-        // console.log(randomWord);
-        // setWORD(randomWord);
-        // console.log(WORD);
       });
   }, []);
 
   useEffect(() => {
+    WORD.current = mainWord;
+  }, [mainWord]);
+
+  useEffect(() => {
     const randomWord = wordPool[Math.floor(Math.random() * wordPool.length)];
     console.log(randomWord);
-    setWORD(randomWord);
+    setMainWord(randomWord);
   }, [wordPool]);
 
   useEffect(() => {
@@ -105,21 +105,24 @@ export default function Wordle() {
   }
 
   const checkWord = () => {
-    const userWord = userRef.current[rowRef.current];
-    let word = WORD;
+    let userWord = userRef.current[rowRef.current];
+    let word = WORD.current;
     if(!wordRef.current.has(userWord)) {
       alertUser("Not in word list");
       return;
     }
 
-    for(let i = 0; i < WORD.length; i++) {
+    for(let i = 0; i < WORD.current.length; i++) {
+      console.log('userWord[i]: ' + userWord[i]);
+      console.log('word[i]: ' + word[i]);
       if(userWord[i] === word[i]){
         setColor("correct", i);
         word = word.replace(word[i], " ");
+        userWord = userWord.replace(userWord[i], " ");
       }
     }
     
-    if(userWord === WORD) {
+    if(userWord === WORD.current) {
       switch(rowRef.current) {
         case 0:
           alertUser("Genius");
@@ -145,8 +148,10 @@ export default function Wordle() {
       return;
     } 
 
-    for(let i = 0; i < WORD.length; i++) { 
+    for(let i = 0; i < WORD.current.length; i++) { 
       for(let j = 0; j < userWord.length; j++) {
+        console.log('userWord[i]: ' + userWord[i]);
+        console.log('word[j]: ' + word[j]);
         if(userWord[i] === word[j]) {
           setColor("almost", i);
         word = word.replace(word[j], " ");
@@ -159,7 +164,7 @@ export default function Wordle() {
       setRow(prev => prev + 1);
 
     if(rowRef.current === 5) {
-      setMessage(WORD);
+      setMessage(WORD.current);
       setMessageStatus("alert");
     }
   };
