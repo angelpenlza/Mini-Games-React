@@ -24,7 +24,7 @@ export default function Wordle() {
         const wordPoolArray = text.split('\n').map(word => word.trim().toUpperCase());
         setWordPool(wordPoolArray);
         const randomWord = wordPoolArray[Math.floor(Math.random() * wordPool.length)];
-        setWord(randomWord);
+        setWORD(randomWord);
       });
   }, []);
 
